@@ -1,49 +1,52 @@
 #include "sort.h"
 
 /**
- * swap - Swap func
- * @a: first num
- * @b: second num
+ * swap_func - swap numbers
+ * @idx1: first num
+ * @idx2: second num
+ * @array: array to be swapped in memmory
+ * Return: void
  */
-void swap(int *a, int *b)
+
+void swap_func(int *array, int idx1, int idx2)
 {
-	int temp = *a;
+int *ptr = array;
+int temp;
 
-	*a = *b;
-	*b = temp;
-
+temp = ptr[idx1];
+ptr[idx1] = ptr[idx2];
+ptr[idx2] = temp;
 }
 
 /**
- * bubble_sort - bubble sort
- * @array: Array
- * @size: Size
+ * bubble_sort -  bubble sort numbers
+ * @size: array size
+ * @array: array to be swapped in memmory
+ * Return: void
  */
 void bubble_sort(int *array, size_t size)
 {
-	int flag = 1;
-	int i;
-	int length;
+int i, len = 0;
+int *A = array;
+bool swapped = false;
 
-	length = size;
+len = size;
+if (len <= 1)
+	return;
+do {
+swapped = false;
+for (i = 1; i < len; i++)
+{
+if (A[i - 1] > A[i])
+{
+	swap_func(A, i - 1, i);
+	swapped = true;
+	print_array(A, len);
+}
+}
 
-	if (array == NULL || length <= 1)
-		return;
+} while (swapped == true);
 
-	while (flag)
-	{
-		flag = 0;
-		for (i = 1; i < length; i++)
-		{
-			if (array[i - 1] >  array[i])
-			{
-				swap(&array[i - 1], &array[i]);
-				print_array(array, size);
-				flag = 1;
-			}
-		}
-
-	}
 
 
 }

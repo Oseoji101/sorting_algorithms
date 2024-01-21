@@ -1,45 +1,58 @@
 #include "sort.h"
+
 /**
- * swap - Swap func
- * @a: first num
- * @b: second num
+ * swap_sel - swap numbers
+ * @idx1: first num
+ * @idx2: second num
+ * @array: array to be swapped in memmory
+ * Return: void
  */
-void swap(int *a, int *b)
+
+void swap_sel(int *array, int idx1, int idx2)
 {
-	int temp = *a;
+int *ptr = array;
+int temp;
 
-	*a = *b;
-	*b = temp;
-
+temp = ptr[idx1];
+ptr[idx1] = ptr[idx2];
+ptr[idx2] = temp;
 }
 
 /**
- * selection_sort - selection_sort sort
- * @array: Array
- * @size: Size
+ * selection_sort - selction sorting
+ * @array: array
+ * @size: size of the array
  */
 void selection_sort(int *array, size_t size)
 {
-	int checkerminindex;
 	int i, j;
-	int length = size;
+	int aLength = size;
+	int jMin;
 
-	if (array == NULL || length <= 1)
+	if (array == NULL || size < 2)
 		return;
-
-	for (i = 0; i < length - 1; i++)
+	/* advance the position through the entire array */
+	/*   (could do i < aLength-1 because single element is also min element) */
+	for (i = 0; i < aLength - 1; i++)
 	{
-		checkerminindex = i;
-		for (j = i + 1; j < length; j++)/* 2 1 8 9 5 0 */
+		/* find the min element in the unsorted a[i .. aLength-1] */
+
+		/* assume the min is the first element */
+		jMin = i;
+		/* test against elements after i to find the smallest */
+		for (j = i + 1; j < aLength; j++)
 		{
-			if (array[checkerminindex] > array[j])
+			/* if this element is less, then it is the new minimum */
+			if (array[j] < array[jMin])
 			{
-				checkerminindex = j;
+				/* found new minimum; remember its index */
+				jMin = j;
 			}
 		}
-		if (checkerminindex != i)
+
+		if (jMin != i)
 		{
-			swap(&array[checkerminindex], &array[i]);
+			swap_sel(array, i, jMin);
 			print_array(array, size);
 		}
 	}
